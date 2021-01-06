@@ -1,0 +1,30 @@
+#!/bin/sh
+
+# This script is used to open a given file with the program of my choice - specialized for
+# the Windows Subsystem for Linux environment.
+#
+# This is required since the shell doesn't have an actual X server to open GUI programs, just a
+# shell. So in general, Windows files are routed through 'cmd.exe /C start ...', otherwise most
+# other files will be opened with $EDITOR.
+
+case "$1" in
+    # Windows files
+    *.docx | \
+    *.idf  | \
+    *.jpg  | \
+    *.msg  | \
+    *.pdf  | \
+    *.PDF  | \
+    *.png  | \
+    *.pptx | \
+    *.xlsx ) \
+    cmd.exe '/C' start '' "$(wslpath -w "$1")" ;;
+    *.txt|*.md|*.markdown|*.awk|*.fish|*.json) "$EDITOR" "$1";;
+    # Else try mimetype
+    *) (
+        mime_type="$(mimetype -b "$1")"
+        case "$mime_type" in
+            text/*|*shellscript) "$EDITOR" "$1" ;;
+        esac
+    );;
+esac
