@@ -20,12 +20,16 @@ case "$1" in
     *.xlsx ) \
     cmd.exe '/C' start '' "$(wslpath -w "$1")" ;;
     *.txt|*.md|*.markdown|*.awk|*.fish|*.json) "$EDITOR" "$1";;
-    *.zip) if command -v nvim; then nvim "$1"; elif command -v vim; then vim "$1"; fi ;;
+    *.zip) if command -v nvim >/dev/null; then
+            nvim "$1"
+           elif command -v vim > /dev/null; then
+            vim "$1"
+           fi ;;
     # Else try mimetype
-    *) (
+    *)
         mime_type="$(mimetype -b "$1")"
         case "$mime_type" in
             text/*|*shellscript) "$EDITOR" "$1" ;;
         esac
-    );;
+    ;;
 esac
