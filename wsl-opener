@@ -16,6 +16,7 @@ case "$1" in
     *.pdf  | \
     *.PDF  | \
     *.png  | \
+    *.PNG  | \
     *.pptx | \
     *.xlsx ) \
     cmd.exe '/C' start '' "$(wslpath -w "$1")" ;;
