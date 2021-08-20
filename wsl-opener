@@ -18,6 +18,7 @@ case "$1" in
     *.png  | \
     *.PNG  | \
     *.pptx | \
+    *.xlsm | \
     *.xlsx ) \
     cmd.exe '/C' start '' "$(wslpath -w "$1")" ;;
     *.txt|*.md|*.markdown|*.awk|*.fish|*.json|*.idf) "$EDITOR" "$1";;
