@@ -30,9 +30,10 @@ case "$1" in
            fi ;;
     # Else try mimetype
     *)
-        mime_type="$(mimetype -b "$1")"
+        mime_type="$(file -L -b --mime-type "$1")"
         case "$mime_type" in
             text/*|*shellscript) "$EDITOR" "$1" ;;
         esac
     ;;
+    # Do nothing if we haven't explicitly matched anything
 esac
